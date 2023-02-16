@@ -6,14 +6,19 @@ import (
 	"github.com/ionnotion/echo-api/controllers"
 	"github.com/ionnotion/echo-api/models"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main()  {
 	e := echo.New()
+	e.Use(middleware.CORS())
+
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
+
 	models.DbConnect()
+
 	e.GET("/properties", controllers.GetAll)
 	e.GET("/properties/:id", controllers.GetById)
 	e.POST("/properties", controllers.PostPromotion)
